@@ -24,11 +24,18 @@ public class PlayerMovement : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.LeftArrow))
         {
+            this.GetComponent<Animator>().SetBool("Running", true);
+            this.transform.localScale = new Vector3(-1, 1, 1);
             rb.AddForce(new Vector2(-10, 0));
         }
-        if (Input.GetKey(KeyCode.RightArrow))
+        else if (Input.GetKey(KeyCode.RightArrow))
         {
+            this.GetComponent<Animator>().SetBool("Running", true);
+            this.transform.localScale = new Vector3(1, 1, 1);
             rb.AddForce(new Vector2(10, 0));
+        }
+        else {
+            this.GetComponent<Animator>().SetBool("Running", false);
         }
     }
 }
