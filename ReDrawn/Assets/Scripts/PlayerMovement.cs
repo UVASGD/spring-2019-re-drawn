@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
     // Start is called before the first frame update
     Rigidbody2D rb;
+    bool jumping = false;
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody2D>();
@@ -14,15 +15,20 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space) && !jumping)
         {
             //RaycastHit2D hit = Physics2D.Raycast(gameObject.transform.position, new Vector2(0, -1));
             //if (Mathf.Approximately(hit.distance, 0.0f))
             {
-                rb.AddForce(new Vector2(0, 100));
+                jumping = true;
+                this.GetComponent<Animator>().SetBool("Jumping", true);
+                rb.AddForce(new Vector2(0, 300));
             }
         }
-        if (Input.GetKey(KeyCode.LeftArrow))
+        //if (!Input.GetKey(KeyCode.Space)) {
+        //    this.GetComponent<Animator>().SetBool("Jumping", false);
+        //}
+            if (Input.GetKey(KeyCode.LeftArrow))
         {
             this.GetComponent<Animator>().SetBool("Running", true);
             this.transform.localScale = new Vector3(-1, 1, 1);
@@ -36,6 +42,19 @@ public class PlayerMovement : MonoBehaviour
         }
         else {
             this.GetComponent<Animator>().SetBool("Running", false);
+        }
+    }
+
+
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        // this is hacky, we are just trying to test jump animations
+        print("helloooo");
+        print(collision.collider.name);
+        if (collision.collider.name == "PlatformPlaceholder") {
+            jumping = false;
+            this.GetComponent<Animator>().SetBool("Jumping", false);
         }
     }
 }
