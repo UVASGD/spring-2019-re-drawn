@@ -4,37 +4,27 @@ using UnityEngine.UI;
 public class PencilBarController : MonoBehaviour
 {
     public Slider pencilSlider;
-    float maxValue = 10.0f;
-    float currentValue;
-    float amount = 0.05f;
+    private WritingUtensil currentPencil;
 
     // Start is called before the first frame update
     void Start()
     {
-        currentValue = maxValue;
-        pencilSlider.maxValue = maxValue;
-        pencilSlider.value = maxValue;
+
     }
 
-    // Update is called once per frame
-    void Update()
-    {
+    public void updateAppearance() {
+        pencilSlider.value = currentPencil.currentAmount;
     }
 
-    public bool usePencil() {
-        if (currentValue - amount >= 0)
-        {
-            print("hello!");
-            currentValue -= amount;
-            updateAppearance();
-            return true;
-        }
-        else {
-            return false;
-        }
+    public void updatePencilType() {
+        currentPencil = FindObjectOfType<Drawing2>().currentWritingUtensil;
+        initializeBar();
+        pencilSlider.fillRect.GetComponent<Image>().color = currentPencil.color;
+        pencilSlider.handleRect.GetComponent<Image>().color = currentPencil.color;
     }
 
-    void updateAppearance() {
-        pencilSlider.value = currentValue;
+    public void initializeBar() {
+        pencilSlider.maxValue = currentPencil.maxAmount;
+        pencilSlider.value = currentPencil.currentAmount;
     }
 }

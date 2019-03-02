@@ -8,10 +8,10 @@ public class Drawing2 : MonoBehaviour
     public float secondsBetweenPlacement = 1;
     public GameObject DrawingPrefab;
     public GameObject currentDrawing;
-    public float lineThickness = .25f;
     private Vector3 lastPos;
     private Vector3 mouseVelocity = new Vector3(0, 0, 0);
     private GameObject pencilBar;
+    public WritingUtensil currentWritingUtensil;
 
     private List<Vector2> polygonPointsStart = new List<Vector2>();
     private List<Vector2> polygonPointsEnd = new List<Vector2>();
@@ -20,6 +20,7 @@ public class Drawing2 : MonoBehaviour
     void Start()
     {
         pencilBar = GameObject.Find("PencilBar");
+        currentWritingUtensil = GameObject.Find("WritingUtensilsData").GetComponent<WritingUtensils>().yellowPencil;
     }
 
     // Update is called once per frame
@@ -32,8 +33,8 @@ public class Drawing2 : MonoBehaviour
         {
             currentDrawing = Instantiate(DrawingPrefab);
             currentDrawing.transform.position = Vector3.zero;
-            currentDrawing.GetComponent<LineRenderer>().startWidth = lineThickness;
-            currentDrawing.GetComponent<LineRenderer>().endWidth = lineThickness;
+            currentDrawing.GetComponent<LineRenderer>().startWidth = currentWritingUtensil.lineThickness;
+            currentDrawing.GetComponent<LineRenderer>().endWidth = currentWritingUtensil.lineThickness;
         }
 
         else if (Input.GetButton("Fire1") && mouseVelocity.sqrMagnitude > 0)
@@ -48,9 +49,9 @@ public class Drawing2 : MonoBehaviour
                 nextPlaceTime = Time.time + secondsBetweenPlacement;
 
                 Vector3 offset = Vector3.Cross(mouseVelocity, Vector3.forward).normalized;
-                polygonPointsStart.Add(tempPos + offset * lineThickness * .5f);
-                polygonPointsEnd.Add(tempPos + offset * lineThickness * -.5f);
-                pencilBar.GetComponent<PencilBarController>().usePencil();
+                polygonPointsStart.Add(tempPos + offset * currentWritingUtensil.lineThickness * .5f);
+                polygonPointsEnd.Add(tempPos + offset * currentWritingUtensil.lineThickness * -.5f);
+                usePencil();
             }
         }
 
@@ -69,5 +70,22 @@ public class Drawing2 : MonoBehaviour
             polygonPointsStart.Clear();
             polygonPointsEnd.Clear();
         }
+    }
+
+    public bool usePencil() {
+        if (currentWritingUtensil.currentAmount - currentWritingUtensil.lineDensity >= 0)
+        {
+            currentWritingUtensil.currentAmount -= currentWritingUtensil.lineDensity;
+            pencilBar.GetComponent<PencilBarController>().updateAppearance();
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    private void switchToPencil(WritingUtensil pencil) {
+        currentWritingUtensil = pencil;
+        pencilBar.GetComponent<PencilBarController>().updatePencilType();
     }
 }
