@@ -31,6 +31,8 @@ public class Drawing2 : MonoBehaviour
         {
             currentDrawing = Instantiate(DrawingPrefab);
             currentDrawing.transform.position = Vector3.zero;
+            currentDrawing.GetComponent<LineRenderer>().startWidth = lineThickness;
+            currentDrawing.GetComponent<LineRenderer>().endWidth = lineThickness;
         }
 
         else if (Input.GetButton("Fire1") && mouseVelocity.sqrMagnitude > 0)
