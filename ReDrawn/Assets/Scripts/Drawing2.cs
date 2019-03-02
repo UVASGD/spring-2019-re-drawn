@@ -11,6 +11,7 @@ public class Drawing2 : MonoBehaviour
     public float lineThickness = .25f;
     private Vector3 lastPos;
     private Vector3 mouseVelocity = new Vector3(0, 0, 0);
+    private GameObject pencilBar;
 
     private List<Vector2> polygonPointsStart = new List<Vector2>();
     private List<Vector2> polygonPointsEnd = new List<Vector2>();
@@ -18,7 +19,7 @@ public class Drawing2 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        pencilBar = GameObject.Find("PencilBar");
     }
 
     // Update is called once per frame
@@ -49,6 +50,7 @@ public class Drawing2 : MonoBehaviour
                 Vector3 offset = Vector3.Cross(mouseVelocity, Vector3.forward).normalized;
                 polygonPointsStart.Add(tempPos + offset * lineThickness * .5f);
                 polygonPointsEnd.Add(tempPos + offset * lineThickness * -.5f);
+                pencilBar.GetComponent<PencilBarController>().usePencil();
             }
         }
 
