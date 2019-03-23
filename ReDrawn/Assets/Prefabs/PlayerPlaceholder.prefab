@@ -116,6 +116,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3648020242941617182}
+  - {fileID: 8570774623006207177}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -226,6 +227,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a151b8df23f26a41b4e9cb198d9a501, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  groundCheck: {fileID: 8570774623006207177}
 --- !u!95 &3191116731468783267
 Animator:
   serializedVersion: 3
@@ -262,6 +264,33 @@ MonoBehaviour:
   DrawingPrefab: {fileID: 6792299047782196067, guid: 6af4293b577d74f419a39414dfb0db3e,
     type: 3}
   currentDrawing: {fileID: 0}
-  lineThickness: 0.25
-  pencilBar: {fileID: 288523343898799672, guid: 2bb232983af1b40549e55b2b1238b5b2,
-    type: 3}
+--- !u!1 &5155137730460964859
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8570774623006207177}
+  m_Layer: 0
+  m_Name: GroundCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8570774623006207177
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5155137730460964859}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.96, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3648020244061672851}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
