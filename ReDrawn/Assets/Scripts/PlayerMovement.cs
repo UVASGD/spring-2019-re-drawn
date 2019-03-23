@@ -50,7 +50,7 @@ public class PlayerMovement : MonoBehaviour
     void OnCollisionEnter2D(Collision2D collision)
     {
         // this is hacky, we are just trying to test jump animations
-        if (collision.collider.name == "PlatformPlaceholder") {
+        if (collision.collider.tag == "Platform") {
             jumping = false;
             this.GetComponent<Animator>().SetBool("Jumping", false);
         }
