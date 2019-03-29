@@ -11,7 +11,9 @@ public class Drawing2 : MonoBehaviour
     private Vector3 lastPos;
     private Vector3 mouseVelocity = new Vector3(0, 0, 0);
     private GameObject pencilBar;
-    public WritingUtensil currentWritingUtensil;
+    public static List<WritingUtensil> writingUtensils = new List<WritingUtensil>();
+    public int currentWritingUtensil;
+
 
     private List<Vector2> polygonPointsStart = new List<Vector2>();
     private List<Vector2> polygonPointsEnd = new List<Vector2>();
@@ -20,12 +22,20 @@ public class Drawing2 : MonoBehaviour
     void Start()
     {
         pencilBar = GameObject.Find("PencilBar");
-        currentWritingUtensil = GameObject.Find("WritingUtensilsData").GetComponent<WritingUtensils>().yellowPencil;
+        InitializeWritingUtensils();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.T)) {
+            SwitchToPencil(BluePencil.getInstance().index);
+        }
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            SwitchToPencil(YellowPencil.getInstance().index);
+        }
+        //print("Current Writing Utensil " + writingUtensils[currentWritingUtensil].color);
         mouseVelocity = Input.mousePosition - lastPos;
         lastPos = Input.mousePosition;
 
@@ -33,8 +43,8 @@ public class Drawing2 : MonoBehaviour
         {
             currentDrawing = Instantiate(DrawingPrefab);
             currentDrawing.transform.position = Vector3.zero;
-            currentDrawing.GetComponent<LineRenderer>().startWidth = currentWritingUtensil.lineThickness;
-            currentDrawing.GetComponent<LineRenderer>().endWidth = currentWritingUtensil.lineThickness;
+            currentDrawing.GetComponent<LineRenderer>().startWidth = writingUtensils[currentWritingUtensil].lineThickness;
+            currentDrawing.GetComponent<LineRenderer>().endWidth = writingUtensils[currentWritingUtensil].lineThickness;
         }
 
         else if (Input.GetButton("Fire1") && mouseVelocity.sqrMagnitude > 0)
@@ -49,9 +59,10 @@ public class Drawing2 : MonoBehaviour
                 nextPlaceTime = Time.time + secondsBetweenPlacement;
 
                 Vector3 offset = Vector3.Cross(mouseVelocity, Vector3.forward).normalized;
-                polygonPointsStart.Add(tempPos + offset * currentWritingUtensil.lineThickness * .5f);
-                polygonPointsEnd.Add(tempPos + offset * currentWritingUtensil.lineThickness * -.5f);
-                usePencil();
+                print(currentWritingUtensil + ", " + writingUtensils.Count);
+                polygonPointsStart.Add(tempPos + offset * writingUtensils[currentWritingUtensil].lineThickness * .5f);
+                polygonPointsEnd.Add(tempPos + offset * writingUtensils[currentWritingUtensil].lineThickness * -.5f);
+                UsePencil();
             }
         }
 
@@ -72,20 +83,22 @@ public class Drawing2 : MonoBehaviour
         }
     }
 
-    public bool usePencil() {
-        if (currentWritingUtensil.currentAmount - currentWritingUtensil.lineDensity >= 0)
-        {
-            currentWritingUtensil.currentAmount -= currentWritingUtensil.lineDensity;
-            pencilBar.GetComponent<PencilBarController>().updateAppearance();
-            return true;
-        }
-        else {
-            return false;
-        }
+    public bool UsePencil() {
+        bool ret = writingUtensils[currentWritingUtensil].Use();
+        pencilBar.GetComponent<PencilBarController>().updateAppearance();
+        return ret;
     }
 
-    private void switchToPencil(WritingUtensil pencil) {
-        currentWritingUtensil = pencil;
+    private void InitializeWritingUtensils() {
+        currentWritingUtensil = YellowPencil.getInstance().index;
         pencilBar.GetComponent<PencilBarController>().updatePencilType();
+    }
+
+    private bool SwitchToPencil(int index) {
+        // TODO: add a check to make sure you have access
+        currentWritingUtensil = index;
+        print(index + " " + writingUtensils.Count);
+        pencilBar.GetComponent<PencilBarController>().updatePencilType();
+        return true;
     }
 }
