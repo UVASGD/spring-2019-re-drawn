@@ -11,7 +11,9 @@ public class Drawing2 : MonoBehaviour
     private Vector3 lastPos;
     private Vector3 mouseVelocity = new Vector3(0, 0, 0);
     private GameObject pencilBar;
-    public WritingUtensil currentWritingUtensil;
+    public static List<WritingUtensil> writingUtensils = new List<WritingUtensil>();
+    public int currentWritingUtensil;
+
 
     private List<Vector2> polygonPointsStart = new List<Vector2>();
     private List<Vector2> polygonPointsEnd = new List<Vector2>();
@@ -20,43 +22,77 @@ public class Drawing2 : MonoBehaviour
     void Start()
     {
         pencilBar = GameObject.Find("PencilBar");
-        currentWritingUtensil = GameObject.Find("WritingUtensilsData").GetComponent<WritingUtensils>().yellowPencil;
+        InitializeWritingUtensils();
     }
 
     // Update is called once per frame
     void Update()
     {
+		if (Input.GetAxis("Mouse ScrollWheel") > 0f || Input.GetKeyDown(KeyCode.Y)) // forward
+        {
+            currentWritingUtensil = Mathf.Min(currentWritingUtensil + 1, writingUtensils.Count - 1);
+            SwitchToPencil(currentWritingUtensil);
+        }
+		else if (Input.GetAxis("Mouse ScrollWheel") < 0f || Input.GetKeyDown(KeyCode.T)) // backwards
+        {
+            currentWritingUtensil = Mathf.Max(currentWritingUtensil - 1, 0);
+            SwitchToPencil(currentWritingUtensil);
+        }
+        //print("Current Writing Utensil " + writingUtensils[currentWritingUtensil].color);
         mouseVelocity = Input.mousePosition - lastPos;
         lastPos = Input.mousePosition;
 
-        if (Input.GetButtonDown("Fire1"))
+        if (writingUtensils[currentWritingUtensil].currentAmount > 0)
         {
-            currentDrawing = Instantiate(DrawingPrefab);
-            currentDrawing.transform.position = Vector3.zero;
-            currentDrawing.GetComponent<LineRenderer>().startWidth = currentWritingUtensil.lineThickness;
-            currentDrawing.GetComponent<LineRenderer>().endWidth = currentWritingUtensil.lineThickness;
-        }
-
-        else if (Input.GetButton("Fire1") && mouseVelocity.sqrMagnitude > 0)
-        {
-            if (nextPlaceTime < Time.time)
+            // Have some amount of writing utensil to use
+            if (Input.GetButtonDown("Fire1"))
             {
-                Vector3 tempPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                tempPos = new Vector3(tempPos.x, tempPos.y);
-                LineRenderer temp = currentDrawing.GetComponent<LineRenderer>();
-                temp.positionCount += 1;
-                temp.SetPosition(temp.positionCount - 1, tempPos);
-                nextPlaceTime = Time.time + secondsBetweenPlacement;
+                currentDrawing = Instantiate(DrawingPrefab);
+                currentDrawing.transform.position = Vector3.zero;
+                currentDrawing.GetComponent<LineRenderer>().startWidth = writingUtensils[currentWritingUtensil].lineThickness;
+                currentDrawing.GetComponent<LineRenderer>().endWidth = writingUtensils[currentWritingUtensil].lineThickness;
+            }
 
-                Vector3 offset = Vector3.Cross(mouseVelocity, Vector3.forward).normalized;
-                polygonPointsStart.Add(tempPos + offset * currentWritingUtensil.lineThickness * .5f);
-                polygonPointsEnd.Add(tempPos + offset * currentWritingUtensil.lineThickness * -.5f);
-                usePencil();
+            else if (Input.GetButton("Fire1") && mouseVelocity.sqrMagnitude > 0)
+            {
+                if (nextPlaceTime < Time.time)
+                {
+                    Vector3 tempPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    tempPos = new Vector3(tempPos.x, tempPos.y);
+                    LineRenderer temp = currentDrawing.GetComponent<LineRenderer>();
+                    temp.positionCount += 1;
+                    temp.SetPosition(temp.positionCount - 1, tempPos);
+                    nextPlaceTime = Time.time + secondsBetweenPlacement;
+
+                    Vector3 offset = Vector3.Cross(mouseVelocity, Vector3.forward).normalized;
+                    print(currentWritingUtensil + ", " + writingUtensils.Count);
+                    polygonPointsStart.Add(tempPos + offset * writingUtensils[currentWritingUtensil].lineThickness * .5f);
+                    polygonPointsEnd.Add(tempPos + offset * writingUtensils[currentWritingUtensil].lineThickness * -.5f);
+                    UsePencil();
+                }
+            }
+
+            else if (Input.GetButtonUp("Fire1"))
+            {
+                PolygonCollider2D temp = currentDrawing.GetComponent<PolygonCollider2D>();
+                Vector2[] colliderPoints = new Vector2[polygonPointsStart.Count * 2];
+                for (int x = 0; x < colliderPoints.Length / 2; x++)
+                {
+                    colliderPoints[x] = polygonPointsStart[x];
+                    colliderPoints[colliderPoints.Length - x - 1] = polygonPointsEnd[x];
+                }
+                temp.points = colliderPoints;
+                Rigidbody2D rb = currentDrawing.GetComponent<Rigidbody2D>();
+                rb.simulated = true;
+                polygonPointsStart.Clear();
+                polygonPointsEnd.Clear();
+                currentDrawing = null;
             }
         }
-
-        else if (Input.GetButtonUp("Fire1"))
+        // You're all out of writing utensil
+        else if (currentDrawing != null)
         {
+            // Can't hold onto current drawing anymore
             PolygonCollider2D temp = currentDrawing.GetComponent<PolygonCollider2D>();
             Vector2[] colliderPoints = new Vector2[polygonPointsStart.Count * 2];
             for (int x = 0; x < colliderPoints.Length / 2; x++)
@@ -69,23 +105,26 @@ public class Drawing2 : MonoBehaviour
             rb.simulated = true;
             polygonPointsStart.Clear();
             polygonPointsEnd.Clear();
+            currentDrawing = null;
         }
     }
 
-    public bool usePencil() {
-        if (currentWritingUtensil.currentAmount - currentWritingUtensil.lineDensity >= 0)
-        {
-            currentWritingUtensil.currentAmount -= currentWritingUtensil.lineDensity;
-            pencilBar.GetComponent<PencilBarController>().updateAppearance();
-            return true;
-        }
-        else {
-            return false;
-        }
+    public void UsePencil() {
+        writingUtensils[currentWritingUtensil].Use();
+        pencilBar.GetComponent<PencilBarController>().updateAppearance();
     }
 
-    private void switchToPencil(WritingUtensil pencil) {
-        currentWritingUtensil = pencil;
+    private void InitializeWritingUtensils() {
+        currentWritingUtensil = YellowPencil.getInstance().index;
         pencilBar.GetComponent<PencilBarController>().updatePencilType();
+        BluePencil.getInstance();
+    }
+
+    private bool SwitchToPencil(int index) {
+        // TODO: add a check to make sure you have access
+        currentWritingUtensil = index;
+        print(index + " " + writingUtensils.Count);
+        pencilBar.GetComponent<PencilBarController>().updatePencilType();
+        return true;
     }
 }
