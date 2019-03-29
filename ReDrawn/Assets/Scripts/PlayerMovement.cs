@@ -27,7 +27,8 @@ public class PlayerMovement : MonoBehaviour
         //print(myRigidBody.velocity);
         jumping = !Physics2D.Linecast(transform.position, groundCheck.position, layermask);
         myAnimator.SetBool("Jumping", jumping);
-        if (Input.GetKey(KeyCode.Space) && !jumping)
+        myAnimator.SetBool("Skidding", myRigidBody.velocity.magnitude > 0 && !jumping);
+        if (Input.GetButton("Jump") && !jumping)
         {
             //RaycastHit2D hit = Physics2D.Raycast(gameObject.transform.position, new Vector2(0, -1));               
             myRigidBody.AddForce(new Vector2(0, jumpForce));
@@ -35,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
         //if (!Input.GetKey(KeyCode.Space)) {
         //    this.GetComponent<Animator>().SetBool("Jumping", false);
         //}
-        if (Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow))
+        if (Input.GetAxis("Horizontal") < 0)
         {
             myAnimator.SetBool("Running", true);
             this.transform.localScale = new Vector3(-1, 1, 1);
@@ -44,7 +45,7 @@ public class PlayerMovement : MonoBehaviour
                 myRigidBody.AddForce(new Vector2(-runForce, 0)); 
             }
         }
-        else if (Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow))
+        else if (Input.GetAxis("Horizontal") > 0)
         {
             myAnimator.SetBool("Running", true);
             this.transform.localScale = new Vector3(1, 1, 1);
@@ -54,7 +55,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
         else {
-            this.GetComponent<Animator>().SetBool("Running", false);
+            myAnimator.SetBool("Running", false);
         }
     }
 
