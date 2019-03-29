@@ -10,6 +10,9 @@ public class PlayerMovement : MonoBehaviour
     bool jumping = false;
     public Transform groundCheck;
     private int layermask;
+    private float jumpForce = 150f;
+    private float runForce = 10f;
+    private float maxVelocity = 25f;
     void Start()
     {
         myRigidBody = gameObject.GetComponent<Rigidbody2D>();
@@ -21,27 +24,34 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //print(myRigidBody.velocity);
         jumping = !Physics2D.Linecast(transform.position, groundCheck.position, layermask);
         myAnimator.SetBool("Jumping", jumping);
         if (Input.GetKey(KeyCode.Space) && !jumping)
         {
             //RaycastHit2D hit = Physics2D.Raycast(gameObject.transform.position, new Vector2(0, -1));               
-            myRigidBody.AddForce(new Vector2(0, 150));
+            myRigidBody.AddForce(new Vector2(0, jumpForce));
         }
         //if (!Input.GetKey(KeyCode.Space)) {
         //    this.GetComponent<Animator>().SetBool("Jumping", false);
         //}
-        if (Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow))
         {
             myAnimator.SetBool("Running", true);
             this.transform.localScale = new Vector3(-1, 1, 1);
-            myRigidBody.AddForce(new Vector2(-10, 0));
+            if (Mathf.Abs(myRigidBody.velocity.x) < maxVelocity)
+            {
+                myRigidBody.AddForce(new Vector2(-runForce, 0)); 
+            }
         }
-        else if (Input.GetKey(KeyCode.RightArrow))
+        else if (Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow))
         {
             myAnimator.SetBool("Running", true);
             this.transform.localScale = new Vector3(1, 1, 1);
-            myRigidBody.AddForce(new Vector2(10, 0));
+            if (Mathf.Abs(myRigidBody.velocity.x) < maxVelocity)
+            {
+                myRigidBody.AddForce(new Vector2(runForce, 0)); 
+            }
         }
         else {
             this.GetComponent<Animator>().SetBool("Running", false);
