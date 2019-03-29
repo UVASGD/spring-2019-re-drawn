@@ -13,12 +13,13 @@ public class PlayerMovement : MonoBehaviour
     private float jumpForce = 150f;
     private float runForce = 10f;
     private float maxVelocity = 25f;
+    private float skiddingThreshhold = 0.75f;
     void Start()
     {
         myRigidBody = gameObject.GetComponent<Rigidbody2D>();
         myAnimator = gameObject.GetComponent<Animator>();
         layermask = ~(1 << LayerMask.NameToLayer("Ignore Raycast"));
-        print(layermask);
+        //print(layermask);
     }
 
     // Update is called once per frame
@@ -27,7 +28,7 @@ public class PlayerMovement : MonoBehaviour
         //print(myRigidBody.velocity);
         jumping = !Physics2D.Linecast(transform.position, groundCheck.position, layermask);
         myAnimator.SetBool("Jumping", jumping);
-        myAnimator.SetBool("Skidding", myRigidBody.velocity.magnitude > 0 && !jumping);
+        myAnimator.SetBool("Skidding", myRigidBody.velocity.magnitude > skiddingThreshhold && !jumping);
         if (Input.GetButton("Jump") && !jumping)
         {
             //RaycastHit2D hit = Physics2D.Raycast(gameObject.transform.position, new Vector2(0, -1));               
