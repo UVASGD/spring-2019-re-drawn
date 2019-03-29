@@ -4,27 +4,26 @@ using UnityEngine.UI;
 public class PencilBarController : MonoBehaviour
 {
     public Slider pencilSlider;
-    private WritingUtensil currentPencil;
+    Drawing2 drawingObject;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        drawingObject = FindObjectOfType<Drawing2>();
     }
 
     public void updateAppearance() {
-        pencilSlider.value = currentPencil.currentAmount;
+        pencilSlider.value = Drawing2.writingUtensils[drawingObject.currentWritingUtensil].currentAmount;
     }
 
     public void updatePencilType() {
-        currentPencil = FindObjectOfType<Drawing2>().currentWritingUtensil;
         initializeBar();
-        pencilSlider.fillRect.GetComponent<Image>().color = currentPencil.color;
-        pencilSlider.handleRect.GetComponent<Image>().color = currentPencil.color;
+        pencilSlider.fillRect.GetComponent<Image>().color = Drawing2.writingUtensils[drawingObject.currentWritingUtensil].color;
+        pencilSlider.handleRect.GetComponent<Image>().color = Drawing2.writingUtensils[drawingObject.currentWritingUtensil].color;
     }
 
     public void initializeBar() {
-        pencilSlider.maxValue = currentPencil.maxAmount;
-        pencilSlider.value = currentPencil.currentAmount;
+        pencilSlider.maxValue = Drawing2.writingUtensils[drawingObject.currentWritingUtensil].maxAmount;
+        pencilSlider.value = Drawing2.writingUtensils[drawingObject.currentWritingUtensil].currentAmount;
     }
 }
