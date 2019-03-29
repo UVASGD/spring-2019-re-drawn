@@ -35,15 +35,8 @@ public abstract class WritingUtensil
         count++;
     }
 
-    public bool Use()
+    public void Use()
     {
-            if (this.currentAmount - this.lineDensity >= 0)
-            {
-                this.currentAmount -= this.lineDensity;
-                return true;
-            }
-            else {
-                return false;
-            }
-        }
+        this.currentAmount = Mathf.Max(this.currentAmount - this.lineDensity, 0);
     }
+}
