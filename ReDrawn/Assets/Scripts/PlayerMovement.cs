@@ -14,8 +14,11 @@ public class PlayerMovement : MonoBehaviour
     private float runForce = 10f;
     private float maxVelocity = 25f;
     private float skiddingThreshhold = 0.75f;
+    private bool facingRight;
+
     void Start()
     {
+        facingRight = transform.localScale.x > 0;
         myRigidBody = gameObject.GetComponent<Rigidbody2D>();
         myAnimator = gameObject.GetComponent<Animator>();
         layermask = ~(1 << LayerMask.NameToLayer("Ignore Raycast"));
@@ -42,7 +45,10 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetAxis("Horizontal") < 0)
         {
             myAnimator.SetBool("Running", true);
-            this.transform.localScale = new Vector3(-1, 1, 1);
+            if (facingRight)
+            {
+                Flip();
+            }
             if (Mathf.Abs(myRigidBody.velocity.x) < maxVelocity)
             {
                 myRigidBody.AddForce(new Vector2(-runForce, 0)); 
@@ -51,7 +57,10 @@ public class PlayerMovement : MonoBehaviour
         else if (Input.GetAxis("Horizontal") > 0)
         {
             myAnimator.SetBool("Running", true);
-            this.transform.localScale = new Vector3(1, 1, 1);
+            if (!facingRight)
+            {
+                Flip();
+            }
             if (Mathf.Abs(myRigidBody.velocity.x) < maxVelocity)
             {
                 myRigidBody.AddForce(new Vector2(runForce, 0)); 
@@ -62,6 +71,14 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+
+    private void Flip()
+    {
+        facingRight = !facingRight;
+        Vector3 theScale = transform.localScale;
+        theScale.x *= -1;
+        transform.localScale = theScale;
+    }
 
 
     //void OnCollisionEnter2D(Collision2D collision)
