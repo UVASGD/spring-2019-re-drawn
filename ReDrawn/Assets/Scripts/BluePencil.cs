@@ -4,13 +4,19 @@ using UnityEngine;
 
 public class BluePencil : WritingUtensil
 {
-    private static BluePencil instance = new BluePencil();
+    private static BluePencil instance = null;
 
-    public static BluePencil getInstance() {
+    public static BluePencil GetInstance()
+    {
+        if (instance == null)
+        {
+            instance = new BluePencil();
+        }
         return instance;
     }
 
-    public BluePencil() {
+    public BluePencil()
+    {
         this.maxAmount = 12.0f;
         this.currentAmount = this.maxAmount;
         this.lineDensity = 0.2f;
