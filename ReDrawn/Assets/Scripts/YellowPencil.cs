@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class YellowPencil : WritingUtensil
 {
-    private static YellowPencil instance = new YellowPencil();
+    private static YellowPencil instance = null;
 
     public static YellowPencil GetInstance()
     {
