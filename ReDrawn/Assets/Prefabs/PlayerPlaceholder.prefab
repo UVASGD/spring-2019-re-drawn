@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: 1010072251600486734}
   m_Layer: 2
   m_Name: PlayerPlaceholder
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -264,6 +264,7 @@ MonoBehaviour:
   DrawingPrefab: {fileID: 6792299047782196067, guid: 6af4293b577d74f419a39414dfb0db3e,
     type: 3}
   currentDrawing: {fileID: 0}
+  currentWritingUtensil: 0
 --- !u!1 &5155137730460964859
 GameObject:
   m_ObjectHideFlags: 0
