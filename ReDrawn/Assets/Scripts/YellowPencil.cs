@@ -6,11 +6,17 @@ public class YellowPencil : WritingUtensil
 {
     private static YellowPencil instance = new YellowPencil();
 
-    public static YellowPencil getInstance() {
+    public static YellowPencil GetInstance()
+    {
+        if (instance == null)
+        {
+            instance = new YellowPencil();
+        }
         return instance;
     }
 
-    public YellowPencil() {
+    public YellowPencil()
+    {
         this.maxAmount = 10.0f;
         this.currentAmount = this.maxAmount;
         this.lineDensity = 0.05f;
