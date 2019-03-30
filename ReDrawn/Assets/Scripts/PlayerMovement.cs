@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
     Rigidbody2D myRigidBody;
     Animator myAnimator;
     bool jumping = false;
-    public Transform groundCheck;
+    public List<Transform> groundCheck;
     private int layermask;
     private float jumpForce = 150f;
     private float runForce = 10f;
@@ -26,7 +26,9 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         //print(myRigidBody.velocity);
-        jumping = !Physics2D.Linecast(transform.position, groundCheck.position, layermask);
+        jumping = !Physics2D.Linecast(transform.position, groundCheck[0].position, layermask) &&
+                  !Physics2D.Linecast(transform.position, groundCheck[1].position, layermask) &&
+                  !Physics2D.Linecast(transform.position, groundCheck[2].position, layermask);
         myAnimator.SetBool("Jumping", jumping);
         myAnimator.SetBool("Skidding", myRigidBody.velocity.magnitude > skiddingThreshhold && !jumping);
         if (Input.GetButton("Jump") && !jumping)
