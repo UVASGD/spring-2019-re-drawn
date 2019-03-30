@@ -10,7 +10,7 @@ public class PlayerMovement : MonoBehaviour
     bool jumping = false;
     public List<Transform> groundCheck;
     private int layermask;
-    private float jumpForce = 150f;
+    private float jumpForce = 10f;
     private float runForce = 10f;
     private float maxVelocity = 25f;
     private float skiddingThreshhold = 0.75f;
@@ -26,15 +26,15 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         //print(myRigidBody.velocity);
-        jumping = !Physics2D.Linecast(transform.position, groundCheck[0].position, layermask) &&
-                  !Physics2D.Linecast(transform.position, groundCheck[1].position, layermask) &&
-                  !Physics2D.Linecast(transform.position, groundCheck[2].position, layermask);
+        jumping = !(Physics2D.Linecast(transform.position, groundCheck[0].position, layermask) ||
+                  Physics2D.Linecast(transform.position, groundCheck[1].position, layermask) ||
+                  Physics2D.Linecast(transform.position, groundCheck[2].position, layermask));
         myAnimator.SetBool("Jumping", jumping);
         myAnimator.SetBool("Skidding", myRigidBody.velocity.magnitude > skiddingThreshhold && !jumping);
-        if (Input.GetButton("Jump") && !jumping)
+        if (Input.GetButtonDown("Jump") && !jumping)
         {
             //RaycastHit2D hit = Physics2D.Raycast(gameObject.transform.position, new Vector2(0, -1));               
-            myRigidBody.AddForce(new Vector2(0, jumpForce));
+            myRigidBody.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
         }
         //if (!Input.GetKey(KeyCode.Space)) {
         //    this.GetComponent<Animator>().SetBool("Jumping", false);
