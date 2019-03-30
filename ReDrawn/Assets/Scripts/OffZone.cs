@@ -22,6 +22,7 @@ public class OffZone : MonoBehaviour
         if(collision.gameObject.tag == "Player")
         {
             collision.transform.position = initialPosition;
+            collision.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         }
     }
 }
