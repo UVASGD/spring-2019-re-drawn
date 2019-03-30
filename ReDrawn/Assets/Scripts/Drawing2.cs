@@ -28,17 +28,16 @@ public class Drawing2 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		if (Input.GetAxis("Mouse ScrollWheel") > 0f || Input.GetKeyDown(KeyCode.Y)) // forward
+        if (Input.GetAxis("Mouse ScrollWheel") > 0f || Input.GetKeyDown(KeyCode.Y)) // forward
         {
             currentWritingUtensil = Mathf.Min(currentWritingUtensil + 1, writingUtensils.Count - 1);
             SwitchToPencil(currentWritingUtensil);
         }
-		else if (Input.GetAxis("Mouse ScrollWheel") < 0f || Input.GetKeyDown(KeyCode.T)) // backwards
+        else if (Input.GetAxis("Mouse ScrollWheel") < 0f || Input.GetKeyDown(KeyCode.T)) // backwards
         {
             currentWritingUtensil = Mathf.Max(currentWritingUtensil - 1, 0);
             SwitchToPencil(currentWritingUtensil);
         }
-        //print("Current Writing Utensil " + writingUtensils[currentWritingUtensil].color);
         mouseVelocity = Input.mousePosition - lastPos;
         lastPos = Input.mousePosition;
 
@@ -109,21 +108,23 @@ public class Drawing2 : MonoBehaviour
         }
     }
 
-    public void UsePencil() {
+    public void UsePencil()
+    {
         writingUtensils[currentWritingUtensil].Use();
         pencilBar.GetComponent<PencilBarController>().updateAppearance();
     }
 
-    private void InitializeWritingUtensils() {
-        currentWritingUtensil = YellowPencil.getInstance().index;
+    private void InitializeWritingUtensils()
+    {
+        currentWritingUtensil = YellowPencil.GetInstance().index;
         pencilBar.GetComponent<PencilBarController>().updatePencilType();
-        BluePencil.getInstance();
+        BluePencil.GetInstance();
     }
 
-    private bool SwitchToPencil(int index) {
+    private bool SwitchToPencil(int index)
+    {
         // TODO: add a check to make sure you have access
         currentWritingUtensil = index;
-        print(index + " " + writingUtensils.Count);
         pencilBar.GetComponent<PencilBarController>().updatePencilType();
         return true;
     }
