@@ -39,4 +39,9 @@ public abstract class WritingUtensil
     {
         this.currentAmount = Mathf.Max(this.currentAmount - this.lineDensity, 0);
     }
+
+    public void Reset()
+    {
+        this.currentAmount = maxAmount;
+    }
 }

@@ -20,13 +20,17 @@ public class DropThroughPlatform : MonoBehaviour
     {
         if(collision.gameObject.tag == "Player" && Input.GetAxis("Vertical") < 0)
         {
-            gameObject.GetComponent<Collider2D>().enabled = false;
+            collision.otherCollider.enabled = false;
             Invoke("ReEnableCollider", 0.5f);
         }
     }
 
     void ReEnableCollider()
     {
-        gameObject.GetComponent<Collider2D>().enabled = true;
+        Collider2D[] colliderList = gameObject.GetComponents<Collider2D>();
+        foreach(Collider2D oneOfThem in colliderList)
+        {
+            oneOfThem.enabled = true;
+        }
     }
 }

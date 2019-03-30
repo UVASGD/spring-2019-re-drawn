@@ -28,6 +28,14 @@ public class Drawing2 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Delete this after MSE and stuff
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            ResetPencils();
+        }
+
+
         if (Input.GetAxis("Mouse ScrollWheel") > 0f || Input.GetKeyDown(KeyCode.Y)) // forward
         {
             currentWritingUtensil = Mathf.Min(currentWritingUtensil + 1, writingUtensils.Count - 1);
@@ -114,6 +122,14 @@ public class Drawing2 : MonoBehaviour
         pencilBar.GetComponent<PencilBarController>().updateAppearance();
     }
 
+    public void ResetPencils()
+    {
+        foreach(WritingUtensil utensil in writingUtensils){
+            utensil.Reset();
+        }
+        pencilBar.GetComponent<PencilBarController>().updateAppearance();
+    }
+    
     private void InitializeWritingUtensils()
     {
         currentWritingUtensil = YellowPencil.GetInstance().index;
