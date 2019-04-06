@@ -34,6 +34,7 @@ public class PlayerMovement : MonoBehaviour
                   Physics2D.Linecast(transform.position, groundCheck[2].position, layermask));
         myAnimator.SetBool("Jumping", jumping);
         myAnimator.SetBool("Skidding", myRigidBody.velocity.magnitude > skiddingThreshhold && !jumping);
+        myAnimator.SetBool("Running", Input.GetAxis("Horizontal") != 0);
         if (Input.GetButtonDown("Jump") && !jumping)
         {
             //RaycastHit2D hit = Physics2D.Raycast(gameObject.transform.position, new Vector2(0, -1));               
@@ -44,7 +45,6 @@ public class PlayerMovement : MonoBehaviour
         //}
         if (Input.GetAxis("Horizontal") < 0)
         {
-            myAnimator.SetBool("Running", true);
             if (facingRight)
             {
                 Flip();
@@ -56,7 +56,6 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (Input.GetAxis("Horizontal") > 0)
         {
-            myAnimator.SetBool("Running", true);
             if (!facingRight)
             {
                 Flip();
@@ -65,9 +64,6 @@ public class PlayerMovement : MonoBehaviour
             {
                 myRigidBody.AddForce(new Vector2(runForce, 0)); 
             }
-        }
-        else {
-            myAnimator.SetBool("Running", false);
         }
     }
 
