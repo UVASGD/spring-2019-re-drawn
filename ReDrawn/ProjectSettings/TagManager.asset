@@ -6,6 +6,7 @@ TagManager:
   tags:
   - ShowOnPause
   - Platform
+  - Drawing
   layers:
   - Default
   - TransparentFX
