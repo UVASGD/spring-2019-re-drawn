@@ -3,8 +3,13 @@ using UnityEngine.UI;
 
 public class PencilBarController : MonoBehaviour
 {
-    public Slider pencilSlider;
+    Slider pencilSlider;
     public Drawing2 drawingObject;
+
+    void Start()
+    {
+        pencilSlider = GetComponent<Slider>();
+    }
 
     public void updateAppearance()
     {
