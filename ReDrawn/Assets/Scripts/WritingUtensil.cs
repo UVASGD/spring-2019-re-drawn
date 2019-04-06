@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class WritingUtensil
+public abstract class WritingUtensil : MonoBehaviour
 {
     public float maxAmount;
     public float currentAmount;
     public float lineDensity; // amount of pencil lead subtracted per unit distance of drawing
     public float lineThickness;
     public Color color;
+    public Texture2D texture;
     public int index;
     static int count = 0;
 
@@ -21,12 +22,12 @@ public abstract class WritingUtensil
     // physics material
 
     public WritingUtensil() {
-        Debug.Log("INSTANTIATING PENCIL " + count);
         this.maxAmount = 0;
         this.currentAmount = 0;
         this.lineDensity = 0;
         this.lineThickness = 0;
         this.color = Color.white;
+        this.texture = null; // defaults to whatever is set in LineTest prefab
         lock (Drawing2.writingUtensils)
         {
             this.index = count;

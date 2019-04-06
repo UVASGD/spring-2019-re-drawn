@@ -22,5 +22,6 @@ public class YellowPencil : WritingUtensil
         this.lineDensity = 0.05f;
         this.lineThickness = 0.25f;
         this.color = new Color32(255, 210, 0, 255);
+        this.texture = Resources.Load<Texture2D>("Charcoal Sprite");
     }
 }

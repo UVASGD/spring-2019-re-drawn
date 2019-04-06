@@ -29,7 +29,6 @@ public class Drawing2 : MonoBehaviour
     void Update()
     {
         // Delete this after MSE and stuff
-
         if (Input.GetKeyDown(KeyCode.R))
         {
             ResetPencils();
@@ -58,6 +57,10 @@ public class Drawing2 : MonoBehaviour
                 currentDrawing.transform.position = Vector3.zero;
                 currentDrawing.GetComponent<LineRenderer>().startWidth = writingUtensils[currentWritingUtensil].lineThickness;
                 currentDrawing.GetComponent<LineRenderer>().endWidth = writingUtensils[currentWritingUtensil].lineThickness;
+                if (writingUtensils[currentWritingUtensil].texture)
+                {
+                    currentDrawing.GetComponent<LineRenderer>().materials[0].mainTexture = writingUtensils[currentWritingUtensil].texture;
+                }
             }
 
             else if (Input.GetButton("Fire1") && mouseVelocity.sqrMagnitude > 0)

@@ -22,5 +22,6 @@ public class BluePencil : WritingUtensil
         this.lineDensity = 0.2f;
         this.lineThickness = 0.25f;
         this.color = new Color32(0, 169, 255, 255);
+        this.texture = Resources.Load<Texture2D>("Blue Pencil Sprite");
     }
 }
