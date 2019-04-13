@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2634598213385094612}
   - component: {fileID: 400186351418836489}
   - component: {fileID: 1430958365585535623}
+  - component: {fileID: 3413530331424641772}
   m_Layer: 0
   m_Name: DrawingObject
   m_TagString: Platform
@@ -175,3 +176,16 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &3413530331424641772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6792299047782196067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dce2231c2a3899348a873c5b43db9a68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeToCombine: 0

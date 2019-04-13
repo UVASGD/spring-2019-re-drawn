@@ -84,6 +84,35 @@ public class Drawing2 : MonoBehaviour
 
             else if (Input.GetButtonUp("Fire1"))
             {
+                if (polygonPointsStart.Count > 3)
+                {
+                    PolygonCollider2D temp = currentDrawing.GetComponent<PolygonCollider2D>();
+                    Vector2[] colliderPoints = new Vector2[polygonPointsStart.Count * 2];
+                    for (int x = 0; x < colliderPoints.Length / 2; x++)
+                    {
+                        colliderPoints[x] = polygonPointsStart[x];
+                        colliderPoints[colliderPoints.Length - x - 1] = polygonPointsEnd[x];
+                    }
+                    temp.points = colliderPoints;
+                    Rigidbody2D rb = currentDrawing.GetComponent<Rigidbody2D>();
+                    rb.simulated = true;
+                    polygonPointsStart.Clear();
+                    polygonPointsEnd.Clear();
+                    currentDrawing = null;
+                }
+                else
+                {
+                    Destroy(currentDrawing);
+                    currentDrawing = null;
+                }
+            }
+        }
+        // You're all out of writing utensil
+        else if (currentDrawing != null)
+        {
+            if (polygonPointsStart.Count > 3)
+            {
+                // Can't hold onto current drawing anymore
                 PolygonCollider2D temp = currentDrawing.GetComponent<PolygonCollider2D>();
                 Vector2[] colliderPoints = new Vector2[polygonPointsStart.Count * 2];
                 for (int x = 0; x < colliderPoints.Length / 2; x++)
@@ -98,24 +127,11 @@ public class Drawing2 : MonoBehaviour
                 polygonPointsEnd.Clear();
                 currentDrawing = null;
             }
-        }
-        // You're all out of writing utensil
-        else if (currentDrawing != null)
-        {
-            // Can't hold onto current drawing anymore
-            PolygonCollider2D temp = currentDrawing.GetComponent<PolygonCollider2D>();
-            Vector2[] colliderPoints = new Vector2[polygonPointsStart.Count * 2];
-            for (int x = 0; x < colliderPoints.Length / 2; x++)
+            else
             {
-                colliderPoints[x] = polygonPointsStart[x];
-                colliderPoints[colliderPoints.Length - x - 1] = polygonPointsEnd[x];
+                Destroy(currentDrawing);
+                currentDrawing = null;
             }
-            temp.points = colliderPoints;
-            Rigidbody2D rb = currentDrawing.GetComponent<Rigidbody2D>();
-            rb.simulated = true;
-            polygonPointsStart.Clear();
-            polygonPointsEnd.Clear();
-            currentDrawing = null;
         }
     }
 
