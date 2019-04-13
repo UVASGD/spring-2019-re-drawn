@@ -98,6 +98,7 @@ public class Drawing2 : MonoBehaviour
                     rb.simulated = true;
                     polygonPointsStart.Clear();
                     polygonPointsEnd.Clear();
+                    currentDrawing.GetComponent<PolygonCollider2D>().density = writingUtensils[currentWritingUtensil].lineDensity;
                     currentDrawing = null;
                 }
                 else
@@ -125,6 +126,7 @@ public class Drawing2 : MonoBehaviour
                 rb.simulated = true;
                 polygonPointsStart.Clear();
                 polygonPointsEnd.Clear();
+                currentDrawing.GetComponent<PolygonCollider2D>().density = writingUtensils[currentWritingUtensil].lineDensity;
                 currentDrawing = null;
             }
             else
