@@ -15,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
     private float maxVelocity = 25f;
     private float skiddingThreshhold = 0.75f;
     private bool facingRight;
+    private Vector2 forceDirection;
 
     void Start()
     {
@@ -22,6 +23,7 @@ public class PlayerMovement : MonoBehaviour
         myRigidBody = gameObject.GetComponent<Rigidbody2D>();
         myAnimator = gameObject.GetComponent<Animator>();
         layermask = ~(1 << LayerMask.NameToLayer("Ignore Raycast"));
+        forceDirection = Vector2.right;
         //print(layermask);
     }
 
@@ -35,6 +37,10 @@ public class PlayerMovement : MonoBehaviour
         myAnimator.SetBool("Jumping", jumping);
         myAnimator.SetBool("Skidding", myRigidBody.velocity.magnitude > skiddingThreshhold && !jumping);
         myAnimator.SetBool("Running", Input.GetAxis("Horizontal") != 0);
+        if (jumping)
+        {
+            forceDirection = Vector2.right;
+        }
         if (Input.GetButtonDown("Jump") && !jumping)
         {
             //RaycastHit2D hit = Physics2D.Raycast(gameObject.transform.position, new Vector2(0, -1));               
@@ -51,7 +57,7 @@ public class PlayerMovement : MonoBehaviour
             }
             if (Mathf.Abs(myRigidBody.velocity.x) < maxVelocity)
             {
-                myRigidBody.AddForce(new Vector2(-runForce, 0)); 
+                myRigidBody.AddForce(-forceDirection * runForce); 
             }
         }
         else if (Input.GetAxis("Horizontal") > 0)
@@ -62,7 +68,7 @@ public class PlayerMovement : MonoBehaviour
             }
             if (Mathf.Abs(myRigidBody.velocity.x) < maxVelocity)
             {
-                myRigidBody.AddForce(new Vector2(runForce, 0)); 
+                myRigidBody.AddForce(forceDirection * runForce); 
             }
         }
     }
@@ -74,6 +80,16 @@ public class PlayerMovement : MonoBehaviour
         Vector3 theScale = transform.localScale;
         theScale.x *= -1;
         transform.localScale = theScale;
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        Vector2 totalNormal = Vector2.zero;
+        for(int i = 0; i < collision.contactCount; i++)
+        {
+            totalNormal += collision.contacts[i].normal;
+        }
+        forceDirection = -Vector2.Perpendicular(totalNormal).normalized;
     }
 
 
