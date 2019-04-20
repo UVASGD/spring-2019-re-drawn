@@ -4,12 +4,14 @@ using UnityEngine.SceneManagement;
 public class UIManager : MonoBehaviour
 {
     GameObject[] pauseObjects;
+    PlayerMovement playerMovement;
 
     // Start is called before the first frame update
     void Start()
     {
         Time.timeScale = 1;
         pauseObjects = GameObject.FindGameObjectsWithTag("ShowOnPause");
+        playerMovement = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
         hidePaused();
     }
 
@@ -61,6 +63,7 @@ public class UIManager : MonoBehaviour
         {
             g.SetActive(true);
         }
+        playerMovement.paused = true;
     }
 
     //hides objects with ShowOnPause tag
@@ -70,6 +73,7 @@ public class UIManager : MonoBehaviour
         {
             g.SetActive(false);
         }
+        playerMovement.paused = false;
     }
 
     //loads inputted level

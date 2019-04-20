@@ -16,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
     private float skiddingThreshhold = 0.75f;
     private bool facingRight;
     private Vector2 forceDirection;
+    public bool paused = false;
 
     void Start()
     {
@@ -41,7 +42,7 @@ public class PlayerMovement : MonoBehaviour
         {
             forceDirection = Vector2.right;
         }
-        if (Input.GetButtonDown("Jump") && !jumping)
+        if (Input.GetButtonDown("Jump") && !jumping && !paused)
         {
             //RaycastHit2D hit = Physics2D.Raycast(gameObject.transform.position, new Vector2(0, -1));               
             myRigidBody.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
