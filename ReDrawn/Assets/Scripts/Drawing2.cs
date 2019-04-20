@@ -37,12 +37,12 @@ public class Drawing2 : MonoBehaviour
 
         if (Input.GetAxis("Mouse ScrollWheel") > 0f || Input.GetKeyDown(KeyCode.Y)) // forward
         {
-            currentWritingUtensil = Mathf.Min(currentWritingUtensil + 1, writingUtensils.Count - 1);
+            currentWritingUtensil = (currentWritingUtensil + 1) % writingUtensils.Count;
             SwitchToPencil(currentWritingUtensil);
         }
         else if (Input.GetAxis("Mouse ScrollWheel") < 0f || Input.GetKeyDown(KeyCode.T)) // backwards
         {
-            currentWritingUtensil = Mathf.Max(currentWritingUtensil - 1, 0);
+            currentWritingUtensil = currentWritingUtensil == 0 ? writingUtensils.Count-1 : currentWritingUtensil - 1;
             SwitchToPencil(currentWritingUtensil);
         }
         mouseVelocity = Input.mousePosition - lastPos;
