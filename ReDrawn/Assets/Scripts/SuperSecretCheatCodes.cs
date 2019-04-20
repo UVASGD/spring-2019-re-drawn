@@ -28,7 +28,7 @@ public class SuperSecretCheatCodes : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        playerMovement = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
+        playerMovement = gameObject.GetComponent<PlayerMovement>();
     }
 
     // Update is called once per frame
