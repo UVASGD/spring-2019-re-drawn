@@ -1909,6 +1909,7 @@ GameObject:
   - component: {fileID: 1232748364}
   - component: {fileID: 1232748363}
   - component: {fileID: 1232748366}
+  - component: {fileID: 1232748367}
   m_Layer: 0
   m_Name: Tutorial 4 with platforms
   m_TagString: Untagged
@@ -2692,6 +2693,40 @@ EdgeCollider2D:
   - {x: -24.476677, y: -14.268385}
   - {x: -24.619616, y: -14.283826}
   - {x: -24.723896, y: -14.167033}
+--- !u!68 &1232748367
+EdgeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1232748362}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_EdgeRadius: 0
+  m_Points:
+  - {x: -24.477938, y: -14.294603}
+  - {x: -24.605665, y: -14.292404}
+  - {x: -24.680866, y: -14.259197}
+  - {x: -24.75555, y: -14.114916}
+  - {x: -24.648888, y: -14.031903}
+  - {x: -24.560823, y: -14.040692}
+  - {x: -24.533201, y: -13.944646}
+  - {x: -24.426687, y: -13.897989}
+  - {x: -24.322025, y: -13.950772}
+  - {x: -24.329733, y: -14.029115}
+  - {x: -24.374458, y: -14.106285}
+  - {x: -24.279346, y: -14.106718}
+  - {x: -24.246914, y: -14.162636}
+  - {x: -24.250635, y: -14.266356}
+  - {x: -24.265388, y: -14.329599}
+  - {x: -24.332508, y: -14.358125}
+  - {x: -24.402391, y: -14.348411}
+  - {x: -24.47156, y: -14.300258}
 --- !u!1 &1289102316
 GameObject:
   m_ObjectHideFlags: 0
