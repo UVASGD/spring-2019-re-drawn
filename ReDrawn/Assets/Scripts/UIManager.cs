@@ -6,7 +6,6 @@ public class UIManager : MonoBehaviour
     GameObject[] pauseObjects;
     PlayerMovement playerMovement;
 
-    // Start is called before the first frame update
     void Start()
     {
         Time.timeScale = 1;
@@ -37,7 +36,7 @@ public class UIManager : MonoBehaviour
     //Reloads the Level
     public void Reload()
     {
-        GameObject.FindObjectOfType<OffZone>().Reset();
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().ResetTotal();
         pauseControl();
     }
 
@@ -59,6 +58,7 @@ public class UIManager : MonoBehaviour
     //shows objects with ShowOnPause tag
     public void showPaused()
     {
+        print(pauseObjects.Length);
         foreach (GameObject g in pauseObjects)
         {
             g.SetActive(true);

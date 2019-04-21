@@ -17,9 +17,13 @@ public class PlayerMovement : MonoBehaviour
     private bool facingRight;
     private Vector2 forceDirection;
     public bool paused = false;
+    private Vector3 initialPosition;
+    public Vector3 checkpointPosition;
 
     void Start()
     {
+        initialPosition = transform.position;
+        checkpointPosition = initialPosition;
         facingRight = transform.localScale.x > 0;
         myRigidBody = gameObject.GetComponent<Rigidbody2D>();
         myAnimator = gameObject.GetComponent<Animator>();
@@ -93,6 +97,30 @@ public class PlayerMovement : MonoBehaviour
         forceDirection = -Vector2.Perpendicular(totalNormal).normalized;
     }
 
+    private void Reset(Vector3 position)
+    {
+        transform.position = position;
+        transform.rotation = Quaternion.identity;
+        GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        GetComponent<Animator>().Play("PlaceholderIdle");
+        GameObject[] drawings = GameObject.FindGameObjectsWithTag("Drawing");
+        for (int z = 0; z < drawings.Length; z++)
+        {
+            Destroy(drawings[z]);
+        }
+        GetComponent<Drawing2>().ResetPencils();
+    }
+
+    public void ResetTotal()
+    {
+        Reset(initialPosition);
+        checkpointPosition = initialPosition;
+    }
+
+    public void ResetCheckpoint()
+    {
+        Reset(checkpointPosition);
+    }
 
     //void OnCollisionEnter2D(Collision2D collision)
     //{
