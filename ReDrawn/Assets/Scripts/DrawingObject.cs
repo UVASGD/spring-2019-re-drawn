@@ -14,7 +14,7 @@ public class DrawingObject : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collisioninfo)
     {
-        if (Time.time < timeToCombine && collisioninfo.collider.tag == "Platform")
+        if (Time.time < timeToCombine && collisioninfo.collider.tag == "Drawing")
         {
             FixedJoint2D currJoint = gameObject.AddComponent<FixedJoint2D>();
             currJoint.connectedBody = collisioninfo.collider.attachedRigidbody;
