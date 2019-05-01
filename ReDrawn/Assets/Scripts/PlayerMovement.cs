@@ -10,10 +10,10 @@ public class PlayerMovement : MonoBehaviour
     bool jumping = false;
     public List<Transform> groundCheck;
     private int layermask;
-    private float jumpForce = 10f;
-    private float runForce = 10f;
-    private float maxVelocity = 25f;
-    private float skiddingThreshhold = 0.75f;
+    public float jumpForce = 10f;
+    public float runForce = 10f;
+    public float maxVelocity = 25f;
+    public float skiddingThreshhold = 0.75f;
     private bool facingRight;
     private Vector2 forceDirection;
     public bool paused = false;
