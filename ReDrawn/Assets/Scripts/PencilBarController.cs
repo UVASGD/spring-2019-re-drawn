@@ -4,11 +4,12 @@ using UnityEngine.UI;
 public class PencilBarController : MonoBehaviour
 {
     Slider pencilSlider;
-    public Drawing2 drawingObject;
+    Drawing2 drawingObject;
 
-    void Start()
+    private void Awake()
     {
         pencilSlider = GetComponent<Slider>();
+        drawingObject = GameObject.FindWithTag("Player").GetComponent<Drawing2>();
     }
 
     public void updateAppearance()
