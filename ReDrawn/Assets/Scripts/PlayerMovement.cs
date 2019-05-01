@@ -18,7 +18,21 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 forceDirection;
     public bool paused = false;
     private Vector3 initialPosition;
-    public Vector3 checkpointPosition;
+    private Vector3 checkpointPosition;
+    private Checkpoint curCheckpoint;
+    [HideInInspector] public Checkpoint currentCheckpoint {
+        get {
+            return this.curCheckpoint;
+        }
+        set {
+            if(curCheckpoint != null)
+            {
+                curCheckpoint.GetComponent<Animator>().SetBool("FlagActive", false);
+            }
+            curCheckpoint = value;
+            curCheckpoint.GetComponent<Animator>().SetBool("FlagActive", true);
+            checkpointPosition = curCheckpoint.transform.position;
+        } }
 
     void Start()
     {
