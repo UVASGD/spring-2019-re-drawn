@@ -173,7 +173,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3648020244061672855}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.85, y: 0.50507325, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3648020242941617182}
@@ -294,7 +294,12 @@ MonoBehaviour:
   - {fileID: 8570774623006207177}
   - {fileID: 1917873233}
   - {fileID: 869875186}
+  jumpForce: 10
+  runForce: 10
+  maxVelocity: 25
+  skiddingThreshhold: 0.75
   paused: 0
+  checkpointPosition: {x: 0, y: 0, z: 0}
 --- !u!95 &3191116731468783267
 Animator:
   serializedVersion: 3
