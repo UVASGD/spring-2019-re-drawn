@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Collectable : MonoBehaviour
 {
     public static int numTotal;
+    public string nextLevelName;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,6 +22,7 @@ public class Collectable : MonoBehaviour
     {
         if(other.CompareTag("Player"))
         {
+
             if (this.tag == "Collectable")
             {
                 other.GetComponent<Collector>().numCollect-=1;
@@ -29,6 +32,7 @@ public class Collectable : MonoBehaviour
             else if (this.tag == "Box" && other.GetComponent<Collector>().numCollect <= 0)
             {
                 print("You have all the things and have touched this box!");
+                SceneManager.LoadScene(nextLevelName);
             }
         }
     }
