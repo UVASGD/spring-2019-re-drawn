@@ -55,6 +55,15 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void unpause()
+    {
+        if (Time.timeScale == 0)
+        {
+            Time.timeScale = 1;
+            hidePaused();
+        }
+    }
+
     //shows objects with ShowOnPause tag
     public void showPaused()
     {
