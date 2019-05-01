@@ -75,7 +75,7 @@ public class Drawing2 : MonoBehaviour
                     nextPlaceTime = Time.time + secondsBetweenPlacement;
 
                     Vector3 offset = Vector3.Cross(mouseVelocity, Vector3.forward).normalized;
-                    print(currentWritingUtensil + ", " + writingUtensils.Count);
+                    //print(currentWritingUtensil + ", " + writingUtensils.Count);
                     polygonPointsStart.Add(tempPos + offset * writingUtensils[currentWritingUtensil].lineThickness * .5f);
                     polygonPointsEnd.Add(tempPos + offset * writingUtensils[currentWritingUtensil].lineThickness * -.5f);
                     UsePencil();
