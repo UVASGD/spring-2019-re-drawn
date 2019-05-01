@@ -118,7 +118,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -294,7 +294,12 @@ MonoBehaviour:
   - {fileID: 8570774623006207177}
   - {fileID: 1917873233}
   - {fileID: 869875186}
+  jumpForce: 10
+  runForce: 10
+  maxVelocity: 25
+  skiddingThreshhold: 0.75
   paused: 0
+  checkpointPosition: {x: 0, y: 0, z: 0}
 --- !u!95 &3191116731468783267
 Animator:
   serializedVersion: 3
