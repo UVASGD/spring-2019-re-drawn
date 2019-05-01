@@ -123,6 +123,7 @@ public class PlayerMovement : MonoBehaviour
             Destroy(drawings[z]);
         }
         GetComponent<Drawing2>().ResetPencils();
+        GameObject.Find("GameManager").GetComponent<UIManager>().unpause();
     }
 
     public void ResetTotal()
