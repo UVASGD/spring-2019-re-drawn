@@ -5,22 +5,15 @@ using UnityEngine.UI;
 
 public class Collectable : MonoBehaviour
 {
-    private static int count;
-    public Text countText;
     public static int numTotal;
     // Start is called before the first frame update
     void Start()
     {
-        count = 0;
-        countText = GameObject.Find("CountText").GetComponent<Text>();
-        setCountText();
-        numTotal = GameObject.FindGameObjectsWithTag("Collectable").Length;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //print("Count: " + count);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -29,15 +22,18 @@ public class Collectable : MonoBehaviour
         {
             if (this.tag == "Collectable")
             {
+                other.GetComponent<Collector>().numCollect-=1;
+                other.GetComponent<Collector>().setCountText();
                 Destroy(gameObject);
-                count++;
-                setCountText();
-                print("Count: " + count); //just testing some stuff
+            }
+            else if (this.tag == "Box" && other.GetComponent<Collector>().numCollect <= 0)
+            {
+                print("You have all the things and have touched this box!");
             }
         }
     }
-    void setCountText()
+    /*void setCountText()
     {
         countText.text = "Count: " + count.ToString();
-    }
+    }*/
 }

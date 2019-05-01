@@ -7,6 +7,8 @@ TagManager:
   - ShowOnPause
   - Platform
   - Drawing
+  - Collectable
+  - Box
   layers:
   - Default
   - TransparentFX
