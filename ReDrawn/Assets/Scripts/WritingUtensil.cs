@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class WritingUtensil : MonoBehaviour
+public abstract class WritingUtensil
 {
     public float maxAmount;
     public float currentAmount;

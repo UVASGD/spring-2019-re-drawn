@@ -17,7 +17,7 @@ public class Checkpoint : MonoBehaviour
     {
         if (!alreadyHit && collision.gameObject.tag == "Player")
         {
-            collision.gameObject.GetComponent<PlayerMovement>().checkpointPosition = transform.position;
+            collision.gameObject.GetComponent<PlayerMovement>().currentCheckpoint = this;
             if (resetPencils)
             {
                 collision.gameObject.GetComponent<Drawing2>().ResetPencils();
