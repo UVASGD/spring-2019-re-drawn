@@ -158,6 +158,7 @@ GameObject:
   - component: {fileID: 3191116731468783267}
   - component: {fileID: 1010072251600486734}
   - component: {fileID: 3482178181372494498}
+  - component: {fileID: 572194965}
   m_Layer: 2
   m_Name: PlayerPlaceholder
   m_TagString: Player
@@ -247,7 +248,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: f6ae27d253d85de489ca266fcd787462, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -299,7 +300,6 @@ MonoBehaviour:
   maxVelocity: 25
   skiddingThreshhold: 0.75
   paused: 0
-  checkpointPosition: {x: 0, y: 0, z: 0}
 --- !u!95 &3191116731468783267
 Animator:
   serializedVersion: 3
@@ -351,6 +351,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeBetweenKeyPress: 1
   timeForCode: 5
+--- !u!114 &572194965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3648020244061672855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34576940dd7dc764293a4c79a3749a97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  numTotal: 0
+  numCollect: 0
+  nextLevel: 
+  countText: {fileID: 0}
 --- !u!1 &5155137730460964859
 GameObject:
   m_ObjectHideFlags: 0
