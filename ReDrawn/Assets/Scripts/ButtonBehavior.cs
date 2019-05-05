@@ -7,4 +7,9 @@ public class ButtonBehavior : MonoBehaviour
     {
         SceneManager.LoadScene(sceneToChangeTo);
     }
+
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
 }
